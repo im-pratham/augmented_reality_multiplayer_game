@@ -435,7 +435,6 @@ GameObject:
   - component: {fileID: 1011795601}
   - component: {fileID: 1011795600}
   - component: {fileID: 1011795599}
-  - component: {fileID: 1011795602}
   m_Layer: 0
   m_Name: Network Manager
   m_TagString: Untagged
@@ -449,7 +448,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1011795598}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f57f84daf17ef6040a1952a36a9e91f9, type: 3}
   m_Name: 
@@ -467,8 +466,8 @@ MonoBehaviour:
     type: 2}
   m_AutoCreatePlayer: 1
   m_PlayerSpawnMethod: 1
-  m_OfflineScene: Menu
-  m_OnlineScene: Main
+  m_OfflineScene: LocalGameMenu
+  m_OnlineScene: LocalGameMain
   m_SpawnPrefabs:
   - {fileID: 1237624981033436, guid: ecb640360d3e23d41b7e8f845b9e1d13, type: 2}
   - {fileID: 1037365033801598, guid: d7f7c44f965d7e84582f36de136d32ac, type: 2}
@@ -539,7 +538,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   manager: {fileID: 0}
-  showGUI: 1
+  showGUI: 0
   offsetX: 0
   offsetY: 0
 --- !u!4 &1011795601
@@ -555,18 +554,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1011795602
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1011795598}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbcec099cf9f4c344a53955995b07dd5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  roomSize: 6
 --- !u!1 &1119603912
 GameObject:
   m_ObjectHideFlags: 0
