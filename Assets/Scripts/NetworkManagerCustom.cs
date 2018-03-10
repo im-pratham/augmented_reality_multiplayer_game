@@ -46,11 +46,11 @@ public class NetworkManagerCustom : NetworkManager {
 		Debug.Log ("level loaded ");
 		Debug.Log (scene.name);
 		Debug.Log (mode);
-		if (scene.name.Equals("Menu")) {
+		if (scene.name.Equals("LocalGameMenu")) {
 			Debug.Log ("menu called");
 			//SetUpMenuSceneButtons ();
 			StartCoroutine(SetUpMenuSceneButtons ());
-		} else {
+		} else if (scene.name.Equals("LocalGameMain")){
 			SetUpOtherSceneButtons();
 		}
 	}
