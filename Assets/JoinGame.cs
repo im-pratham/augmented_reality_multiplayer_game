@@ -47,6 +47,10 @@ public class JoinGame : MonoBehaviour {
 			_roomListItemGO.transform.SetParent (roomListParent);
 
 			// have a component on gameobject that will take care of setting up a name/amount of users.
+			RoomListItem _roomListItem = _roomListItemGO.GetComponent<RoomListItem>();
+			if (_roomListItem != null) {
+				_roomListItem.Setup (match, JoinRoom);
+			}
 			// as well as setting up callback function that will join a game
 
 			roomList.Add (_roomListItemGO);
@@ -56,6 +60,13 @@ public class JoinGame : MonoBehaviour {
 			status.text = "no rooms available...";
 		}
 	}
+
+	public void JoinRoom(MatchInfoSnapshot _match) {
+		//Debug.Log ("Joining " + _match.name);
+		networkManager.matchMaker.JoinMatch(_match.networkId, "", "", "", 0, 0, networkManager.OnMatchJoined);
+		ClearRoomList ();
+		status.text = "Joining...";
+	} 
 
 	void ClearRoomList () {
 		for (int i = 0; i < roomList.Count; i++) {
