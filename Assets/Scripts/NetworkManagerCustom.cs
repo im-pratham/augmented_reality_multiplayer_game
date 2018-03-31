@@ -3,8 +3,12 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Networking.Match;
 
 public class NetworkManagerCustom : NetworkManager {
+	public Text debugText;
+
+
 
 	public void StartupHost() {
 		SetIPAddress ();
@@ -70,6 +74,16 @@ public class NetworkManagerCustom : NetworkManager {
 	}
 	void onStopHost() {
 		Debug.Log ("stooped");
+		//debugText.text = "stopped";
 		NetworkManager.singleton.StopHost ();
+	}
+	private int playerCount = 0;
+	public override void OnMatchJoined(bool success, string extendedInfo, MatchInfo match) {
+		Debug.Log ("Onmatch joined called");
+	}
+	void OnPlayerConnected(NetworkPlayer player) {
+		Debug.Log("Player " + playerCount++ + " connected from " + player.ipAddress + ":" + player.port);
+
+		//debugText.text = "Player " + playerCount++ + " connected from " + player.ipAddress + ":" + player.port;
 	}
 }

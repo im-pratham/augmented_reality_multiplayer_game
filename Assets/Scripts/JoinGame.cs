@@ -8,6 +8,8 @@ public class JoinGame : MonoBehaviour {
 	List<GameObject> roomList = new List<GameObject> ();
 	private NetworkManager networkManager;
 
+	public Text debugText;
+
 	[SerializeField]
 	private Text status;
 
@@ -62,10 +64,31 @@ public class JoinGame : MonoBehaviour {
 
 	public void JoinRoom(MatchInfoSnapshot _match) {
 		//Debug.Log ("Joining " + _match.name);
-		networkManager.matchMaker.JoinMatch(_match.networkId, "", "", "", 0, 0, networkManager.OnMatchJoined);
+		//networkManager.matchMaker.JoinMatch(_match.networkId, "", "", "", 0, 0, networkManager.OnMatchJoined);
+		networkManager.matchMaker.JoinMatch(_match.networkId, "", "", "", 0, 0, OnJoinInternetMatch);
 		ClearRoomList ();
 		status.text = "Joining...";
 	} 
+
+	//this method is called when your request to join a match is returned
+	private void OnJoinInternetMatch(bool success, string extendedInfo, MatchInfo matchInfo) {
+		if (success) {
+			Debug.Log("Able to join a match");
+			debugText.text = "Able to join a match";
+
+			MatchInfo hostInfo = matchInfo;
+			NetworkManager.singleton.StartClient(hostInfo);
+		}
+		else {
+			Debug.LogError("Join match failed");
+			debugText.text = "Join match failed";
+		}
+	}
+
+	private static int playerCount = 0;
+	void OnPlayerConnected(NetworkPlayer player) {
+		Debug.Log("Player " + playerCount + " connected from " + player.ipAddress + ":" + player.port);
+	}
 
 	void ClearRoomList () {
 		for (int i = 0; i < roomList.Count; i++) {
