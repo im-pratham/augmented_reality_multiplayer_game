@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections.Generic;
 using UnityEngine.Networking;
+using System.Collections;
 using UnityEngine.Networking.Match;
 
 public class JoinGame : MonoBehaviour {
@@ -30,6 +31,11 @@ public class JoinGame : MonoBehaviour {
 	
 	public void RefreshRoomList() {
 		ClearRoomList ();
+
+		// start matchmaker if not active
+		if (networkManager.matchMaker == null) {
+			networkManager.StartMatchMaker ();
+		}
 		networkManager.matchMaker.ListMatches (0, 20, "", true, 0, 0, OnMatchList);
 		status.text = "Loading...";
 	}
@@ -66,9 +72,32 @@ public class JoinGame : MonoBehaviour {
 		//Debug.Log ("Joining " + _match.name);
 		//networkManager.matchMaker.JoinMatch(_match.networkId, "", "", "", 0, 0, networkManager.OnMatchJoined);
 		networkManager.matchMaker.JoinMatch(_match.networkId, "", "", "", 0, 0, OnJoinInternetMatch);
-		ClearRoomList ();
-		status.text = "Joining...";
+		StartCoroutine (WaitForJoin ());
 	} 
+
+	// waiting for some time to join, if fails to join, resume 
+	IEnumerator WaitForJoin() {
+		ClearRoomList ();
+
+		// time for which to wait
+		int countDown = 10;
+		while (countDown > 0) {
+			status.text = "Joining... (" + countDown + "s)";
+			yield return new WaitForSeconds (1);
+			countDown--;
+		}
+
+		// if loop completes, that means we are failed to connect
+		status.text = "Failed To Connect.";
+		yield return new WaitForSeconds (1);
+
+		MatchInfo matchInfo = networkManager.matchInfo;
+		if (matchInfo != null) {
+			networkManager.matchMaker.DropConnection (matchInfo.networkId, matchInfo.nodeId, 0, networkManager.OnDropConnection);
+			networkManager.StopHost ();
+		}
+		RefreshRoomList ();
+	}
 
 	//this method is called when your request to join a match is returned
 	private void OnJoinInternetMatch(bool success, string extendedInfo, MatchInfo matchInfo) {
