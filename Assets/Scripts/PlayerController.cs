@@ -18,6 +18,8 @@ public class PlayerController : NetworkBehaviour {
 		if (Input.GetKeyDown (KeyCode.Space)) {
 			CmdFire ();
 		}
+
+
 	}
 
 	// This [Command] code is called on the Client …
