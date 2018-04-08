@@ -14,11 +14,11 @@ MonoBehaviour:
   vuforia:
     vuforiaLicenseKey: AfVx6L3/////AAABmfZGV7lqfE+sszY7CkyrbXVQeBkVdxg0D1SRYQJJ49t9IjGP9ocbHgh2cMrCqKKmXnxPlIznR3Uz/6xaL9P84xwyMNIKX1DyX9D3Lk8d3N8tosAhHICA2iBj8ur8AFZwds3a7wTEnK2H0yaKO7sh8NT2gSt77/KFDOzNksBS3zJwvcIRLNB+ZE73P7ooRI2cX4ourzFphMnoV7l6shcuBy1kH+taCiLOQy8marX60g2KHH3rMBznFvE31MV8CthnCtT5hM73VJRKE40S1GI5PkE2n2AQSfVUu+SOyesLKtWuEwzRPDQHENjZK4iPW4NhFnDbFU1nD8ZmBeyPOwOadXLt5J1N2rq+jGBNth5zO2Tk
     delayedInitialization: 0
-    cameraDeviceModeSetting: -1
+    cameraDeviceModeSetting: -2
     maxSimultaneousImageTargets: 1
     maxSimultaneousObjectTargets: 1
     useDelayedLoadingObjectTargets: 0
-    cameraDirection: 0
+    cameraDirection: 1
     mirrorVideoBackground: 0
   digitalEyewear:
     cameraOffset: 0.06
@@ -55,8 +55,8 @@ MonoBehaviour:
     autoInitBuilder: 0
     sceneUnitsToMillimeter: 0
   deviceTracker:
-    autoInitTracker: 0
-    autoStartTracker: 0
+    autoInitTracker: 1
+    autoStartTracker: 1
     posePrediction: 0
     modelCorrectionMode: 0
     modelTransformEnabled: 0

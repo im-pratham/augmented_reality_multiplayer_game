@@ -1,9 +1,17 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Networking;
 
 public class PlayerController : NetworkBehaviour {
 	public GameObject bulletPrefab;
 	public Transform bulletSpawn;
+
+	void Start () {
+		if (!isLocalPlayer)
+			return;
+		Debug.Log ("setting Player: ");
+		GameObject.Find ("ButtonDisconnect").GetComponent<Button> ().onClick.AddListener(CmdFire);
+	}
 	void Update() {
 		if (!isLocalPlayer) {
 			return;
@@ -26,6 +34,7 @@ public class PlayerController : NetworkBehaviour {
 	// … but it is run on the Server!
 	[Command]
 	void CmdFire () {
+		/***
 		// create bullet from bullet prefab
 		var bullet = (GameObject) Instantiate(bulletPrefab, bulletSpawn.position, bulletSpawn.rotation);
 
@@ -36,7 +45,18 @@ public class PlayerController : NetworkBehaviour {
 		NetworkServer.Spawn(bullet);
 		// destroy bullet after 2 seconds
 		Destroy(bullet, 2.0f);
+		**/
+		//GameObject bullet = Instantiate (Resources.Load ("bullet", typeof(GameObject))) as GameObject;
+		GameObject bullet = (GameObject) Instantiate(bulletPrefab);
+		Rigidbody rb = bullet.GetComponent<Rigidbody> ();
+		bullet.transform.rotation = Camera.main.transform.rotation;
+		bullet.transform.position = Camera.main.transform.position;
+		rb.AddForce (Camera.main.transform.forward * 500f);
+		Destroy (bullet, 2.0f);
+
+		//GetComponent<AudioSource> ().Play ();
 	}
+
 
 	public override void OnStartLocalPlayer ()
 	{

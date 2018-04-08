@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Networking.Match;
 
-public class NetworkManagerCustomVuforia : NetworkManager {
+public class NetworkManagerCustom : NetworkManager {
 	public Text debugText;
 
 
@@ -41,7 +41,7 @@ public class NetworkManagerCustomVuforia : NetworkManager {
 			SetUpOtherSceneButtons ();
 		}
 	}*/
-
+	/**
 	void OnEnable() {
 		SceneManager.sceneLoaded += OnLevelFinishedLoading;
 	}
@@ -60,7 +60,7 @@ public class NetworkManagerCustomVuforia : NetworkManager {
 			SetUpOtherSceneButtons();
 		}
 	}
-
+	**/
 	IEnumerator SetUpMenuSceneButtons () {
 		yield return new WaitForSeconds (0.3f);
 		GameObject.Find ("ButtonLanHost").GetComponent<Button> ().onClick.RemoveAllListeners ();
