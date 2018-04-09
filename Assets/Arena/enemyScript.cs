@@ -6,12 +6,13 @@ public class enemyScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		Debug.Log ("Enemy Spawned");
 		StartCoroutine ("Move");
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		transform.Translate (Vector3.forward * 3f * Time.deltaTime);
+		transform.Translate (Vector3.forward * 1.1f * Time.deltaTime);
 	}
 
 	IEnumerator Move() {

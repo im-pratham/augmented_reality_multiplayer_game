@@ -3,21 +3,27 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.Networking;
 
-public class PlayerController : NetworkBehaviour, IDragHandler, IPointerUpHandler, IPointerDownHandler {
+public class PlayerControllerVuforia : NetworkBehaviour, IDragHandler, IPointerUpHandler, IPointerDownHandler {
 	public GameObject bulletPrefab;
 	public Transform bulletSpawn;
 	//public Button btnForward;
-
+	[SerializeField]
 	public Image bgImg;
+
+	[SerializeField]
 	public Image joystickImg;
+
+
 	private Vector3 inputVector;
+
+	[SerializeField]
 	public Button btnFire;
 
 	void Start () {
 		if (!isLocalPlayer)
 			return;
 		Debug.Log ("setting Player: ");
-		GameObject.Find ("ButtonDisconnect").GetComponent<Button> ().onClick.AddListener(CmdFire);
+		//GameObject.Find ("ButtonDisconnect").GetComponent<Button> ().onClick.AddListener(CmdFire);
 
 		//bgImg = GetComponent<Image> ();
 		//joystickImg = transform.GetChild (0).GetComponent<Image> ();
@@ -32,7 +38,8 @@ public class PlayerController : NetworkBehaviour, IDragHandler, IPointerUpHandle
 	}
 
 	public virtual void OnDrag(PointerEventData ped) {
-		
+		if (!isLocalPlayer)
+			return;
 		Vector2 pos;
 		if (RectTransformUtility.ScreenPointToLocalPointInRectangle (bgImg.rectTransform
 			, ped.position, ped.pressEventCamera, out pos)) {
@@ -50,12 +57,14 @@ public class PlayerController : NetworkBehaviour, IDragHandler, IPointerUpHandle
 	}
 
 	public virtual void OnPointerDown(PointerEventData ped) {
-		
+		if (!isLocalPlayer)
+			return;
 		OnDrag (ped);
 	}
 
 	public virtual void OnPointerUp(PointerEventData ped) {
-		
+		if (!isLocalPlayer)
+			return;
 		inputVector = Vector3.zero;
 		joystickImg.rectTransform.anchoredPosition = Vector3.zero;
 	}
@@ -91,17 +100,16 @@ public class PlayerController : NetworkBehaviour, IDragHandler, IPointerUpHandle
 		if (Input.GetKeyDown (KeyCode.Space)) {
 			CmdFire ();
 		}
-		/*
 		if (Input.touchCount == 1) {
 			CmdFire ();
-		}*/
+		}
 	}
 
 	// This [Command] code is called on the Client …
 	// … but it is run on the Server!
 	[Command]
 	void CmdFire () {
-		
+		/***
 		// create bullet from bullet prefab
 		var bullet = (GameObject) Instantiate(bulletPrefab, bulletSpawn.position, bulletSpawn.rotation);
 
@@ -112,9 +120,9 @@ public class PlayerController : NetworkBehaviour, IDragHandler, IPointerUpHandle
 		NetworkServer.Spawn(bullet);
 		// destroy bullet after 2 seconds
 		Destroy(bullet, 2.0f);
-
+		**/
 		//GameObject bullet = Instantiate (Resources.Load ("bullet", typeof(GameObject))) as GameObject;
-		/**GameObject bullet = (GameObject) Instantiate(bulletPrefab);
+		GameObject bullet = (GameObject) Instantiate(bulletPrefab);
 		Rigidbody rb = bullet.GetComponent<Rigidbody> ();
 		bullet.transform.rotation = Camera.main.transform.rotation;
 		bullet.transform.position = Camera.main.transform.position;
@@ -122,8 +130,8 @@ public class PlayerController : NetworkBehaviour, IDragHandler, IPointerUpHandle
 		// spawn the bullet on clients
 		NetworkServer.Spawn(bullet);
 		Destroy (bullet, 2.0f);
-		**/
-		GetComponent<AudioSource> ().Play ();
+
+		//GetComponent<AudioSource> ().Play ();
 	}
 
 
