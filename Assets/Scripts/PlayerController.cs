@@ -10,24 +10,26 @@ public class PlayerController : NetworkBehaviour, IDragHandler, IPointerUpHandle
 
 	public Image bgImg;
 	public Image joystickImg;
+
+	private PlayerController playerController;
+
+	[SerializeField]
 	private Vector3 inputVector;
+
 	public Button btnFire;
+	public Text debugText;
 
 	void Start () {
 		if (!isLocalPlayer)
 			return;
+		playerController = GameObject.Find ("Player").GetComponent<PlayerController> ();
+
 		Debug.Log ("setting Player: ");
 		GameObject.Find ("ButtonDisconnect").GetComponent<Button> ().onClick.AddListener(CmdFire);
 
 		//bgImg = GetComponent<Image> ();
 		//joystickImg = transform.GetChild (0).GetComponent<Image> ();
 
-
-
-		if (btnFire != null) {
-			Button btn = btnFire.GetComponent<Button> ();
-			btn.onClick.AddListener (CmdFire);
-		}
 
 	}
 
@@ -91,10 +93,31 @@ public class PlayerController : NetworkBehaviour, IDragHandler, IPointerUpHandle
 		if (Input.GetKeyDown (KeyCode.Space)) {
 			CmdFire ();
 		}
-		/*
-		if (Input.touchCount == 1) {
-			CmdFire ();
-		}*/
+		/***if (Input.GetButton ("ForwardButton")) {
+			print ("right move");
+			playerController.transform.position += Vector3.right * 15.0f * Time.deltaTime;
+		}***/
+
+		if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved)
+		{
+			float speed = 0.1F;
+			// Get movement of the finger since last frame
+			Vector2 touchDeltaPosition = Input.GetTouch(0).deltaPosition;
+
+			// Move object across XY plane
+			transform.Translate(-touchDeltaPosition.x * speed, 0, 0);
+			//transform.Translate(-touchDeltaPosition.x * speed, -touchDeltaPosition.y * speed, 0);
+			Debug.Log ("touch: " + touchDeltaPosition);
+			if (debugText != null) {
+				debugText.text = "touch: " + touchDeltaPosition;
+			}
+
+			// NOW CALL FOR FIRE
+			CmdFire();
+		//if (Input.touchCount == 1) {
+		//	CmdFire ();
+		//}
+		}
 	}
 
 	// This [Command] code is called on the Client …
@@ -103,18 +126,33 @@ public class PlayerController : NetworkBehaviour, IDragHandler, IPointerUpHandle
 	void CmdFire () {
 		
 		// create bullet from bullet prefab
-		var bullet = (GameObject) Instantiate(bulletPrefab, bulletSpawn.position, bulletSpawn.rotation);
+		//var bullet = (GameObject) Instantiate(bulletPrefab, bulletSpawn.position, bulletSpawn.rotation);
+		GameObject cam = GameObject.Find("ARCamera");
+		var bullet = (GameObject) Instantiate(bulletPrefab, bulletSpawn.position, this.transform.rotation);
 
+		/**var bullet = (GameObject) Instantiate(bulletPrefab, new Vector3(3, 3, 0), Camera.main.transform.rotation);
 		// add velocity to bullet
 		bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * 6;
+
 
 		// spawn the bullet on clients
 		NetworkServer.Spawn(bullet);
 		// destroy bullet after 2 seconds
 		Destroy(bullet, 2.0f);
+**/
+		//GameObject cam = GameObject.Find("ARCamera");
+		//var bullet = (GameObject) Instantiate(bulletPrefab, cam.transform.position, cam.transform.rotation);
+		// add velocity to bullet
+		bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * 6;
 
+
+		// spawn the bullet on clients
+		NetworkServer.Spawn(bullet);
+		// destroy bullet after 2 seconds
+		Destroy(bullet, 2.0f);
+/***
 		//GameObject bullet = Instantiate (Resources.Load ("bullet", typeof(GameObject))) as GameObject;
-		/**GameObject bullet = (GameObject) Instantiate(bulletPrefab);
+		GameObject bullet = (GameObject) Instantiate(bulletPrefab);
 		Rigidbody rb = bullet.GetComponent<Rigidbody> ();
 		bullet.transform.rotation = Camera.main.transform.rotation;
 		bullet.transform.position = Camera.main.transform.position;
@@ -122,13 +160,18 @@ public class PlayerController : NetworkBehaviour, IDragHandler, IPointerUpHandle
 		// spawn the bullet on clients
 		NetworkServer.Spawn(bullet);
 		Destroy (bullet, 2.0f);
-		**/
-		GetComponent<AudioSource> ().Play ();
+		///**/
+		//GetComponent<AudioSource> ().Play ();
 	}
 
 
 	public override void OnStartLocalPlayer ()
 	{
 		GetComponent <MeshRenderer>().material.color = Color.blue;
+		base.OnStartLocalPlayer ();
+		/***Button btnfire = GameObject.Find ("ForwardButton").GetComponent<Button> ();
+		Debug.Log ("btnfire: " + btnFire);
+		btnFire.onClick.RemoveAllListeners ();
+		btnFire.onClick.AddListener (CmdFire);**/
 	}
 }

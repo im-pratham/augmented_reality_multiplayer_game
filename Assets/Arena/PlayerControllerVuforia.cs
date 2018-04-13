@@ -11,6 +11,9 @@ public class PlayerControllerVuforia : NetworkBehaviour, IDragHandler, IPointerU
 	public Image bgImg;
 
 	[SerializeField]
+	public Text debugText;
+
+	[SerializeField]
 	public Image joystickImg;
 
 
@@ -19,9 +22,11 @@ public class PlayerControllerVuforia : NetworkBehaviour, IDragHandler, IPointerU
 	[SerializeField]
 	public Button btnFire;
 
+	//ARCameraPosition arpos;
 	void Start () {
-		if (!isLocalPlayer)
-			return;
+		
+
+
 		Debug.Log ("setting Player: ");
 		//GameObject.Find ("ButtonDisconnect").GetComponent<Button> ().onClick.AddListener(CmdFire);
 
@@ -38,8 +43,7 @@ public class PlayerControllerVuforia : NetworkBehaviour, IDragHandler, IPointerU
 	}
 
 	public virtual void OnDrag(PointerEventData ped) {
-		if (!isLocalPlayer)
-			return;
+		
 		Vector2 pos;
 		if (RectTransformUtility.ScreenPointToLocalPointInRectangle (bgImg.rectTransform
 			, ped.position, ped.pressEventCamera, out pos)) {
@@ -57,14 +61,12 @@ public class PlayerControllerVuforia : NetworkBehaviour, IDragHandler, IPointerU
 	}
 
 	public virtual void OnPointerDown(PointerEventData ped) {
-		if (!isLocalPlayer)
-			return;
+		
 		OnDrag (ped);
 	}
 
 	public virtual void OnPointerUp(PointerEventData ped) {
-		if (!isLocalPlayer)
-			return;
+		
 		inputVector = Vector3.zero;
 		joystickImg.rectTransform.anchoredPosition = Vector3.zero;
 	}
@@ -100,7 +102,7 @@ public class PlayerControllerVuforia : NetworkBehaviour, IDragHandler, IPointerU
 		if (Input.GetKeyDown (KeyCode.Space)) {
 			CmdFire ();
 		}
-		if (Input.touchCount == 1) {
+		if (Input.touchCount == 2) {
 			CmdFire ();
 		}
 	}
@@ -122,21 +124,41 @@ public class PlayerControllerVuforia : NetworkBehaviour, IDragHandler, IPointerU
 		Destroy(bullet, 2.0f);
 		**/
 		//GameObject bullet = Instantiate (Resources.Load ("bullet", typeof(GameObject))) as GameObject;
-		GameObject bullet = (GameObject) Instantiate(bulletPrefab);
+		/**GameObject bullet = (GameObject) Instantiate(bulletPrefab);
 		Rigidbody rb = bullet.GetComponent<Rigidbody> ();
 		bullet.transform.rotation = Camera.main.transform.rotation;
 		bullet.transform.position = Camera.main.transform.position;
 		rb.AddForce (Camera.main.transform.forward * 500f);
 		// spawn the bullet on clients
 		NetworkServer.Spawn(bullet);
-		Destroy (bullet, 2.0f);
+		Destroy (bullet, 2.0f);**/
 
 		//GetComponent<AudioSource> ().Play ();
+		GameObject cam = GameObject.Find("ARCamera");
+		debugText.text = i++ + " " + cam.transform.position.ToString () + " " + cam.transform.rotation;
+		Debug.Log( cam.transform.position.ToString() );
+
+		GameObject bullet = (GameObject) Instantiate(bulletPrefab);
+		Rigidbody rb = bullet.GetComponent<Rigidbody> ();
+		bullet.transform.rotation = cam.transform.rotation;
+		bullet.transform.position = cam.transform.position;
+		rb.AddForce (cam.transform.forward * 500f);
+		// spawn the bullet on clients
+		NetworkServer.Spawn(bullet);
+		Destroy (bullet, 2.0f);
 	}
 
 
 	public override void OnStartLocalPlayer ()
 	{
 		GetComponent <MeshRenderer>().material.color = Color.blue;
+	}
+	int i = 0;
+	void OnGUI(){
+		if (!isLocalPlayer)
+			return;
+		if( GUI.Button(new Rect(20, 20, 100, 200),"Shoot") ){
+			CmdFire ();
+		}
 	}
 }
