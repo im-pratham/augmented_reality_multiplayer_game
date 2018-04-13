@@ -4,4 +4,37 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 0
+    path: Assets/Scene/Menu.unity
+    guid: 87f83cf2a88f44b4588bd536db6f4344
+  - enabled: 0
+    path: Assets/Scene/Main.unity
+    guid: cd3086f72c0d523468e5496f6175a433
+  - enabled: 0
+    path: Assets/Scene/LocalGameMenu.unity
+    guid: c32f77ada11e83545866fa058a261b2d
+  - enabled: 0
+    path: Assets/Scene/LocalGameMain.unity
+    guid: 8c19acf61b11b8543971fc40b6851db9
+  - enabled: 0
+    path: Assets/Scene/TestScene.unity
+    guid: 093ed3cf40561e046b0901ce3f9e6bb0
+  - enabled: 0
+    path: Assets/Scene/level1.unity
+    guid: 4c588cb20e915ef4dbf3683221a41fde
+  - enabled: 0
+    path: Assets/Arena/Scene/LocalGame.unity
+    guid: 2173c77f0897f4b4193ecf265f75156a
+  - enabled: 0
+    path: Assets/Arena/Scene/Arena.unity
+    guid: 2cba8d125321f5d4ea3700da2366c199
+  - enabled: 1
+    path: Assets/Local/LocalGameMenu.unity
+    guid: 9261feb8776cfc247a8d290515690c2f
+  - enabled: 1
+    path: Assets/Local/LocalGameMain.unity
+    guid: fceac642647ed1d4e9999c750c5cb6d4
+  - enabled: 0
+    path: Assets/Scene/VuforiaTest.unity
+    guid: 1e44ffe49d496df47b3d84a6765106db
