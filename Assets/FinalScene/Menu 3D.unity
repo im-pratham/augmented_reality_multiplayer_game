@@ -1063,7 +1063,7 @@ Prefab:
     - target: {fileID: 11400004, guid: 05a81c3d5091440058129444d28322f3, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1436923338}
+      objectReference: {fileID: 0}
     - target: {fileID: 11400004, guid: 05a81c3d5091440058129444d28322f3, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: OpenPanel
@@ -2055,6 +2055,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initiallyOpen: {fileID: 685114694}
   animator: {fileID: 0}
+  anim: {fileID: 1235861152}
   username1: {fileID: 1949991423}
   password1: {fileID: 919480891}
   loginstatus: {fileID: 999999984}
@@ -2385,7 +2386,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Enter text...
+  m_Text: 
 --- !u!222 &844592048
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3843,7 +3844,7 @@ Prefab:
     - target: {fileID: 11400004, guid: 05a81c3d5091440058129444d28322f3, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1436923338}
+      objectReference: {fileID: 0}
     - target: {fileID: 11400004, guid: 05a81c3d5091440058129444d28322f3, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: CloseCurrent
@@ -3942,6 +3943,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initiallyOpen: {fileID: 0}
   animator: {fileID: 0}
+  anim: {fileID: 0}
   username1: {fileID: 0}
   password1: {fileID: 0}
   loginstatus: {fileID: 0}
@@ -4375,7 +4377,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Enter text...
+  m_Text: 
 --- !u!222 &1292990280
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4816,6 +4818,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initiallyOpen: {fileID: 0}
   animator: {fileID: 0}
+  anim: {fileID: 0}
   username1: {fileID: 0}
   password1: {fileID: 0}
   loginstatus: {fileID: 0}
@@ -5169,7 +5172,7 @@ Prefab:
     - target: {fileID: 11400004, guid: 05a81c3d5091440058129444d28322f3, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1436923338}
+      objectReference: {fileID: 0}
     - target: {fileID: 11400004, guid: 05a81c3d5091440058129444d28322f3, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: OpenPanel
