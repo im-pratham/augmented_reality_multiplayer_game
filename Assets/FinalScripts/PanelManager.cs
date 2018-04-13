@@ -8,7 +8,7 @@ using com.shephertz.app42.paas.sdk.csharp.user;
 using AssemblyCSharp;
 public class PanelManager : MonoBehaviour {
 
-	public Animator initiallyOpen,animator;
+	public Animator initiallyOpen,animator,anim;
 
 	private int m_OpenParameterId;
 	private Animator m_Open;
@@ -20,11 +20,15 @@ public class PanelManager : MonoBehaviour {
 	const string k_ClosedStateName = "Closed";
 	Constant cons = new Constant ();
 	SignInResponse callBack = new SignInResponse ();
-
 	void Start(){
-
+		
 		App42API.Initialize (cons.apiKey, cons.secretKey);  
-		userService = App42API.BuildUserService (); 
+		userService = App42API.BuildUserService ();
+		Debug.Log (PlayerPrefs.GetString("login_status"));
+		if (anim == null)
+			return;
+		else if(anim != null && PlayerPrefs.GetString("login_status").Equals("True"))
+			OpenPanel (anim);
 	}
 	public void OnEnable()
 	{
@@ -32,8 +36,10 @@ public class PanelManager : MonoBehaviour {
 
 		if (initiallyOpen == null)
 			return;
-
-		OpenPanel(initiallyOpen);
+		/*if (PlayerPrefs.GetString ("login_status").Equals ("False"))
+			OpenPanel (initiallyOpen);
+		else*/
+		OpenPanel (initiallyOpen);
 	}
 
 	public void OpenPanel (Animator anim)
@@ -106,12 +112,23 @@ public class PanelManager : MonoBehaviour {
 	}
 
 	public void LoginUser(Animator anim){
-		loginstatus.text = "Please wait while \n Verifying Credintials ....";
-		StartCoroutine (SignIn(anim));
+		PlayerPrefs.SetString ("login_status","True");
+		PlayerPrefs.Save ();
+		OpenPanel (anim);
+		
+		/*if (username1.text.Equals("") && password1.text.Equals("")) {
+			loginstatus.text = "Please Provide \nUsername and Password...";
+			loginstatus.color = Color.red;
+		} else {
+			loginstatus.color = Color.white;
+			loginstatus.text = "Please wait while \n Verifying Credintials ....";
+			//OpenPanel (anim);
+			StartCoroutine (SignIn (anim));
+		}*/
 	}
 
 	public void SignUPUser(){
-		loginstatus.text = "Please wait whil \nCreating New User.....";
+		loginstatus.text = "Please wait while \nCreating New User.....";
 		StartCoroutine (SignUp());
 		
 	}
@@ -121,17 +138,23 @@ public class PanelManager : MonoBehaviour {
 		userService.Authenticate (username1.text, password1.text, callBack);
 		Debug.Log ("IN Enumerator " + callBack.getResult ());
 		while (callBack.getResult () == 0) {
-			yield return new WaitForSeconds (2);
+			yield return new WaitForSeconds (0.5f);
 		}
-		if (callBack.getResult () == 1)
+		if (callBack.getResult () == 1) {
+			PlayerPrefs.SetString ("login_status","True");
+			PlayerPrefs.Save ();
+			Debug.Log (PlayerPrefs.GetString("login_status"));
 			OpenPanel (anim);
+		}
 		else if (callBack.getResult () == 2) {
 			loginstatus.text = "Something wen't \n wrong try again.....";
 			loginstatus.color = Color.red;
+			callBack.setResult ();
 		}
 		else if (callBack.getResult () == 3) {
-			loginstatus.text = "Username/Password \n Provided is Wrong....";
+			loginstatus.text = "Username/Password \n Provided is Wrong oR\n Try Again....";
 			loginstatus.color = Color.red;
+			callBack.setResult ();
 		}
 	}
 	IEnumerator SignUp ()
@@ -146,10 +169,12 @@ public class PanelManager : MonoBehaviour {
 		else if (callBack.getResult () == 2) {
 			loginstatus.text = "Something wen't \n wrong try again.....";
 			loginstatus.color = Color.red;
+			callBack.setResult ();
 		}
 		else if (callBack.getResult () == 3) {
 			loginstatus.text = "Username Providedx`x Will\n Already Exists Please \nChange And Try....";
 			loginstatus.color = Color.red;
+			callBack.setResult ();
 		}
 	}
 	public void NextActivity(){
