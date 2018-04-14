@@ -33,8 +33,8 @@ public class PanelManager : MonoBehaviour {
 		loginstatus.text = "";
 
 		//clearLoginStatus ();
-		PlayerPrefs.SetString("login_status","False");
-		PlayerPrefs.Save ();
+		//PlayerPrefs.SetString("login_status","False");
+		//PlayerPrefs.Save ();
 		Debug.Log (PlayerPrefs.GetString("login_status"));
 		if (anim == null)
 			return;
@@ -42,8 +42,10 @@ public class PanelManager : MonoBehaviour {
 			OpenPanel (anim);
 	}
 
-	public void clearLoginStatus() {
+	public void clearLoginStatus(Animator anim) {
 		PlayerPrefs.SetString ("login_status", "False");
+		PlayerPrefs.Save ();
+		OpenPanel (anim);
 	}
 
 	public void OnEnable()
