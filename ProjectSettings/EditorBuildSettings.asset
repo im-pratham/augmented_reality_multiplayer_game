@@ -32,7 +32,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Local/LocalGameMenu.unity
     guid: 9261feb8776cfc247a8d290515690c2f
-  - enabled: 0
+  - enabled: 1
     path: Assets/SinglePlayer/Scene/SinglePlayerScene.unity
     guid: 3736943a09d59f14ea669c1ac4820f9a
   - enabled: 0

@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class SinglePlayerCollisionScript : MonoBehaviour {
 
+	ScoreMaintain scoreMan = new ScoreMaintain();
 	// Use this for initialization
 	void Start () {
 		
@@ -26,7 +27,7 @@ public class SinglePlayerCollisionScript : MonoBehaviour {
 			GameObject enemy2 = Instantiate (Resources.Load ("enemy2", typeof(GameObject))) as GameObject;
 			GameObject enemy3 = Instantiate (Resources.Load ("enemy3", typeof(GameObject))) as GameObject;
 		}
-
+		scoreMan.SetCount ();
 		Destroy (gameObject);
 	}
 }

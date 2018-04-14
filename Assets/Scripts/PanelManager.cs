@@ -7,6 +7,7 @@ using com.shephertz.app42.paas.sdk.csharp;
 using com.shephertz.app42.paas.sdk.csharp.user;
 using com.shephertz.app42.paas.sdk.csharp.storage;  
 using AssemblyCSharp;
+using UnityEngine.SceneManagement;
 public class PanelManager : MonoBehaviour {
 
 	public Animator initiallyOpen,animator,anim;
@@ -15,7 +16,7 @@ public class PanelManager : MonoBehaviour {
 	private Animator m_Open;
 	private GameObject m_PreviouslySelected;
 	public InputField username1,password1;
-	public Text loginstatus;
+	public Text loginstatus,ScoreField;
 	UserService userService;
 	StorageService storageService;
 	const string k_OpenTransitionName = "Open";
@@ -23,14 +24,15 @@ public class PanelManager : MonoBehaviour {
 	Constant cons = new Constant ();
 	SignInResponse callBack = new SignInResponse ();
 	ScoreResponse callBack1 = new ScoreResponse();
+	ScoreSaveResponse callBack2 = new ScoreSaveResponse();
 	void Start(){
 		
 		App42API.Initialize (cons.apiKey, cons.secretKey);  
 		userService = App42API.BuildUserService ();
 		storageService = App42API.BuildStorageService ();
-
+		loginstatus.text = "";
 		//clearLoginStatus ();
-
+		PlayerPrefs.SetString("login_status","False");
 		Debug.Log (PlayerPrefs.GetString("login_status"));
 		if (anim == null)
 			return;
@@ -124,47 +126,68 @@ public class PanelManager : MonoBehaviour {
 	}
 
 	public void LoginUser(Animator anim){
-		PlayerPrefs.SetString ("login_status","True");
-		PlayerPrefs.Save ();
 		//OpenPanel (anim);
 		
 		if (username1.text.Equals("") && password1.text.Equals("")) {
-			loginstatus.text = "Please Provide \nUsername and Password...";
+			loginstatus.text = "Please Provide Username and Password...";
 			loginstatus.color = Color.red;
-		} else {
+		}else if(username1.text.Equals("") || password1.text.Equals("")){
+			loginstatus.text = "Username or Password is not Provided...";
+			loginstatus.color = Color.red;
+		} 
+		else {
 			loginstatus.color = Color.white;
-			loginstatus.text = "Please wait while \n Verifying Credintials ....";
+			loginstatus.text = "Please wait while Verifying Credintials ....";
 			//OpenPanel (anim);
 			StartCoroutine (SignIn (anim));
 		}
 	}
 
 	public void SignUPUser(){
-		loginstatus.text = "Please wait while \nCreating New User.....";
-		StartCoroutine (SignUp());
+		if (username1.text.Equals ("") && password1.text.Equals ("")) {
+			loginstatus.text = "Please Provide Username and Password...";
+			loginstatus.color = Color.red;
+		} else if (username1.text.Equals ("") || password1.text.Equals ("")) {
+			loginstatus.text = "Username or Password is not Provided...";
+			loginstatus.color = Color.red;
+		} else {
+			loginstatus.color = Color.white;
+			loginstatus.text = "Please wait while Creating New User.....";
+			StartCoroutine (SignUp ());
+		}
 		
 	}
 	IEnumerator SignIn (Animator anim)
 	{
+		App42Log.SetDebug (true);
 		//App42Log.SetDebug(true);        //Print output in your editor console   
-		userService.Authenticate (username1.text, password1.text, callBack);
+		userService.Authenticate (username1.text, password1.text,callBack);
 		Debug.Log ("IN Enumerator " + callBack.getResult ());
 		while (callBack.getResult () == 0) {
 			yield return new WaitForSeconds (0.5f);
 		}
 		if (callBack.getResult () == 1) {
 			PlayerPrefs.SetString ("login_status","True");
+			PlayerPrefs.SetString ("name",username1.text);
 			PlayerPrefs.Save ();
 			Debug.Log (PlayerPrefs.GetString("login_status"));
 			OpenPanel (anim);
 		}
 		else if (callBack.getResult () == 2) {
-			loginstatus.text = "Something wen't \n wrong try again.....";
-			loginstatus.color = Color.red;
+			//loginstatus.text = "Something wen't \n wrong try again.....";
+			//loginstatus.color = Color.red;
 			callBack.setResult ();
 		}
-		else if (callBack.getResult () == 3) {
-			loginstatus.text = "Username/Password \n Provided is Wrong oR\n Try Again....";
+		else if (callBack.getResult () == 2002) {
+			loginstatus.text = "UserName/Password did  not match. Authentication Failed.";
+			loginstatus.color = Color.red;
+			callBack.setResult ();
+		}else if(callBack.getResult() == 2000){
+			loginstatus.text = "User by the name "+username1.text+" does not exist. ";
+			loginstatus.color = Color.red;
+			callBack.setResult ();
+		}else if(callBack.getResult() == 2006){
+			loginstatus.text = "Users do not exist.";
 			loginstatus.color = Color.red;
 			callBack.setResult ();
 		}
@@ -183,8 +206,16 @@ public class PanelManager : MonoBehaviour {
 			loginstatus.color = Color.red;
 			callBack.setResult ();
 		}
-		else if (callBack.getResult () == 3) {
-			loginstatus.text = "Username Providedx`x Will\n Already Exists Please \nChange And Try....";
+		else if (callBack.getResult () == 2001) {
+			loginstatus.text = "The request parameters are invalid. Username "+username1.text+" already exists.";
+			loginstatus.color = Color.red;
+			callBack.setResult ();
+		}else if(callBack.getResult() == 2000){
+			loginstatus.text = "User by the name "+username1.text+" does not exist. ";
+			loginstatus.color = Color.red;
+			callBack.setResult ();
+		}else if(callBack.getResult() == 2006){
+			loginstatus.text = "Users do not exist.";
 			loginstatus.color = Color.red;
 			callBack.setResult ();
 		}
@@ -193,7 +224,7 @@ public class PanelManager : MonoBehaviour {
 		OpenPanel (animator);
 	}
 
-	public void GerHighScores(Animator anim){
+	public void GetHighScores(Animator anim){
 		StartCoroutine (GetHighScoresForDB(anim));
 	}
 	IEnumerator GetHighScoresForDB (Animator anim)
@@ -222,5 +253,33 @@ public class PanelManager : MonoBehaviour {
 			loginstatus.color = Color.red;
 			callBack.setResult ();
 		}
+	}
+
+	public void SinglePlayer(){
+		SceneManager.LoadScene ("SinglePlayerScene");
+	}
+	public void SaveScore(){
+		StartCoroutine (SaveScoreForUser());
+	}
+	IEnumerator SaveScoreForUser ()
+	{
+		string json = "{\"name\":\"Name1\",\"score\":\"score1\"}";
+		string json1 = json.Replace ("Name1",PlayerPrefs.GetString("name")).Replace("score1","600");
+		storageService.InsertJSONDocument("SCORES", "HighScores", json1, callBack2);
+		Debug.Log ("IN Enumerator " + callBack2.getResult ());
+		while (callBack2.getResult () == 0) {
+			yield return new WaitForSeconds (0.5f);
+		}
+		if (callBack2.getResult () == 1) {
+			Debug.Log ("Score Saved Successful");
+		}
+		else if (callBack2.getResult () == 2) {
+			ScoreField.text = "Something wen't Wrong Please Try again";
+			callBack.setResult ();
+		}
+	}
+
+	public void SetStatus(string value){
+		loginstatus.text = value;
 	}
 }

@@ -3495,6 +3495,7 @@ MonoBehaviour:
   username1: {fileID: 1949991423}
   password1: {fileID: 919480891}
   loginstatus: {fileID: 999999984}
+  ScoreField: {fileID: 0}
 --- !u!1 &685114690
 GameObject:
   m_ObjectHideFlags: 0
@@ -3752,6 +3753,7 @@ MonoBehaviour:
   username1: {fileID: 0}
   password1: {fileID: 0}
   loginstatus: {fileID: 0}
+  ScoreField: {fileID: 0}
 --- !u!4 &717862841
 Transform:
   m_ObjectHideFlags: 0
@@ -5075,7 +5077,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 7cb2912222469634ba17a77055919ea8, type: 3}
-    m_FontSize: 36
+    m_FontSize: 32
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 3
@@ -5083,7 +5085,7 @@ MonoBehaviour:
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 1
+    m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: 
@@ -5557,7 +5559,7 @@ Prefab:
       objectReference: {fileID: 1528417842}
     - target: {fileID: 11400004, guid: 05a81c3d5091440058129444d28322f3, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: GerHighScores
+      value: GetHighScores
       objectReference: {fileID: 0}
     - target: {fileID: 11400004, guid: 05a81c3d5091440058129444d28322f3, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -5985,7 +5987,8 @@ MonoBehaviour:
   anim: {fileID: 0}
   username1: {fileID: 0}
   password1: {fileID: 0}
-  loginstatus: {fileID: 0}
+  loginstatus: {fileID: 999999984}
+  ScoreField: {fileID: 0}
 --- !u!4 &1233880542
 Transform:
   m_ObjectHideFlags: 0
@@ -7097,7 +7100,8 @@ MonoBehaviour:
   anim: {fileID: 0}
   username1: {fileID: 0}
   password1: {fileID: 0}
-  loginstatus: {fileID: 0}
+  loginstatus: {fileID: 999999984}
+  ScoreField: {fileID: 0}
 --- !u!4 &1436923339
 Transform:
   m_ObjectHideFlags: 0
@@ -7347,7 +7351,8 @@ MonoBehaviour:
   anim: {fileID: 0}
   username1: {fileID: 0}
   password1: {fileID: 0}
-  loginstatus: {fileID: 0}
+  loginstatus: {fileID: 999999984}
+  ScoreField: {fileID: 0}
 --- !u!4 &1528417843
 Transform:
   m_ObjectHideFlags: 0
@@ -9324,7 +9329,7 @@ Prefab:
     - target: {fileID: 11400004, guid: 05a81c3d5091440058129444d28322f3, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1805211274}
     - target: {fileID: 22400004, guid: 05a81c3d5091440058129444d28322f3, type: 2}
       propertyPath: m_RootOrder
       value: 1
