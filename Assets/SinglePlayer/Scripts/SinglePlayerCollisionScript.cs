@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class SinglePlayerCollisionScript : MonoBehaviour {
 
-	ScoreMaintain scoreMan = new ScoreMaintain();
+	ScoreManagement scoreMan = new ScoreManagement();
 	// Use this for initialization
 	void Start () {
 		

@@ -31,7 +31,13 @@ public class PanelManager : MonoBehaviour {
 		userService = App42API.BuildUserService ();
 		storageService = App42API.BuildStorageService ();
 		loginstatus.text = "";
+<<<<<<< HEAD
 		//clearLoginStatus ();
+=======
+		clearLoginStatus ();
+		//PlayerPrefs.SetString("login_status","True");
+		Debug.Log (PlayerPrefs.GetString("login_status"));
+>>>>>>> 7d8c841f4d884d54e0ad13291bbcd26cec214aaf
 		if (anim == null)
 			return;
 		else if(anim != null && PlayerPrefs.GetString("login_status").Equals("True"))
