@@ -31,13 +31,11 @@ public class PanelManager : MonoBehaviour {
 		userService = App42API.BuildUserService ();
 		storageService = App42API.BuildStorageService ();
 		loginstatus.text = "";
-<<<<<<< HEAD
+
 		//clearLoginStatus ();
-=======
-		clearLoginStatus ();
-		//PlayerPrefs.SetString("login_status","True");
+		PlayerPrefs.SetString("login_status","False");
+		PlayerPrefs.Save ();
 		Debug.Log (PlayerPrefs.GetString("login_status"));
->>>>>>> 7d8c841f4d884d54e0ad13291bbcd26cec214aaf
 		if (anim == null)
 			return;
 		else if(anim != null && PlayerPrefs.GetString("login_status").Equals("True"))
@@ -233,29 +231,29 @@ public class PanelManager : MonoBehaviour {
 	}
 	IEnumerator GetHighScoresForDB (Animator anim)
 	{
-		//App42Log.SetDebug(true);        //Print output in your editor console
+	    App42Log.SetDebug(true);        //Print output in your editor console
 		Query query = QueryBuilder.Build("score","0",Operator.GREATER_THAN);
-		storageService.FindDocsWithQueryPagingOrderBy("SCORES","HighScores",query,1,0,OrderByType.ASCENDING,"name",callBack1);
+		Query query1 = QueryBuilder.Build ("name",PlayerPrefs.GetString("name"),Operator.EQUALS);
+		Query queryfinal = QueryBuilder.CompoundOperator (query,Operator.AND,query1);
+		storageService.FindDocsWithQueryPagingOrderBy("SCORES","HighScores",queryfinal,5,0,OrderByType.DESCENDING,"name",callBack1);
 		//FindDocsWithQueryPagingOrderBy("SCORES", "HighScores",max, offset, key1, OrderByType.ASCENDING, new UnityCallBack());   
 		Debug.Log ("IN Enumerator " + callBack.getResult ());
-		while (callBack.getResult () == 0) {
+		while (callBack1.getResult () == 0) {
 			yield return new WaitForSeconds (0.5f);
 		}
-		if (callBack.getResult () == 1) {
-			PlayerPrefs.SetString ("login_status","True");
-			PlayerPrefs.Save ();
-			Debug.Log (PlayerPrefs.GetString("login_status"));
+		if (callBack1.getResult () == 1) {
+			string response = ScoreResponse.scores;
+			Debug.Log ("Response "+response);
+			char ch = '"';
+			char ch1 = ' ';
+			string newString = ((string)((string)response.Replace ("{","")).Replace("}","")).Replace(ch,ch1).Replace("name :","").Replace("score :","").Replace(","," : ");
+			ScoreField.text = "" + newString;
 			OpenPanel (anim);
+			callBack1.setResult ();
 		}
-		else if (callBack.getResult () == 2) {
-			loginstatus.text = "Something wen't \n wrong try again.....";
-			loginstatus.color = Color.red;
-			callBack.setResult ();
-		}
-		else if (callBack.getResult () == 3) {
-			loginstatus.text = "Username/Password \n Provided is Wrong oR\n Try Again....";
-			loginstatus.color = Color.red;
-			callBack.setResult ();
+		else if (callBack1.getResult () == 2) {
+			ScoreField.text = "Something wen't Wrong Please Try again";
+			callBack1.setResult ();
 		}
 	}
 

@@ -13,7 +13,7 @@ public class ScoreManagement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		score.text = "Score :- " + count + "";
+		score.text = " " + count;
 	}
 
 	public void SetCount (){

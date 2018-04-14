@@ -3495,7 +3495,7 @@ MonoBehaviour:
   username1: {fileID: 1949991423}
   password1: {fileID: 919480891}
   loginstatus: {fileID: 999999984}
-  ScoreField: {fileID: 0}
+  ScoreField: {fileID: 1670340781}
 --- !u!1 &685114690
 GameObject:
   m_ObjectHideFlags: 0
@@ -7352,7 +7352,7 @@ MonoBehaviour:
   username1: {fileID: 0}
   password1: {fileID: 0}
   loginstatus: {fileID: 999999984}
-  ScoreField: {fileID: 0}
+  ScoreField: {fileID: 1670340781}
 --- !u!4 &1528417843
 Transform:
   m_ObjectHideFlags: 0

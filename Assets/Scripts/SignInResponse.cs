@@ -47,6 +47,8 @@ namespace AssemblyCSharp
 		}
 	}
 	public class ScoreResponse:App42CallBack{
+		public static string scores = "";
+		public static int result = 0;
 		public void OnSuccess(object response)  
 		{  
 			Storage storage = (Storage) response;  
@@ -55,13 +57,23 @@ namespace AssemblyCSharp
 			{     
 				App42Log.Console("objectId is " + jsonDocList[i].GetDocId());  
 				App42Log.Console("jsonDoc is " + jsonDocList[i].GetJsonDoc());  
+				scores = scores + "\n"+ jsonDocList [i].GetJsonDoc ();
+				result = 1;
+
 			}    
 		}  
 
 		public void OnException(Exception e)  
 		{  
-			App42Log.Console("Exception : " + e);  
+			App42Log.Console("Exception : " + e);
+			result = 2;
 		}  
+		public int getResult() {
+			return result;
+		}	
+		public void setResult(){
+			result = 0;
+		}
 	}
 	public class ScoreSaveResponse:App42CallBack{
 		public static int result = 0;
