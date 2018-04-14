@@ -32,12 +32,15 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Local/LocalGameMenu.unity
     guid: 9261feb8776cfc247a8d290515690c2f
-  - enabled: 1
-    path: Assets/SinglePlayer/Scene/ARTestScene.unity
+  - enabled: 0
+    path: Assets/SinglePlayer/Scene/SinglePlayerScene.unity
     guid: 3736943a09d59f14ea669c1ac4820f9a
+  - enabled: 0
+    path: Assets/MainScene/New Folder/Menu 3D.unity
+    guid: 0623b6c02bfa06b4891340388a6ffdf9
   - enabled: 1
     path: Assets/MainScene/Menu 3D.unity
-    guid: 0623b6c02bfa06b4891340388a6ffdf9
+    guid: 7e58c39b58068f3489822cddaec7900d
   - enabled: 1
     path: Assets/Local/LocalGameMain.unity
     guid: fceac642647ed1d4e9999c750c5cb6d4
