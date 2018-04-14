@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-public class ScoreMaintain {
+public class ScoreMaintain2 {
 	public Text score;
 	public static int count = 0;
 	// Use this for initialization

@@ -9,13 +9,11 @@ public class ScoreManagement : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		score.text = "Score :- " + count.ToString ();
-		
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		score.text = count + "";
-		
+		score.text = "Score :- " + count + "";
 	}
 
 	public void SetCount (){

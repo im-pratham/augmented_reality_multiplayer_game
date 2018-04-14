@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-public class webCamScript : MonoBehaviour {
+public class webCamScript2 : MonoBehaviour {
 	public GameObject webCameraPlane;
 	public Button fireButton;
 	// Use this for initialization
