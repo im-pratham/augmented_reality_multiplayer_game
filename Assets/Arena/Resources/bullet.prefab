@@ -22,9 +22,8 @@ GameObject:
   - component: {fileID: 33587464728074472}
   - component: {fileID: 135154959387657940}
   - component: {fileID: 23153784350787446}
-  - component: {fileID: 54851581269630810}
-  - component: {fileID: 114009218714249410}
-  - component: {fileID: 114998161773055766}
+  - component: {fileID: 114866171806272200}
+  - component: {fileID: 54913204677923126}
   m_Layer: 0
   m_Name: bullet
   m_TagString: Untagged
@@ -59,7 +58,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: c211b1ffb552f2d43a9d5551649080f4, type: 2}
+  - {fileID: 2100000, guid: d01f7bd622b391946b7482f2dbf1a8ae, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -86,7 +85,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1679139960392044}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!54 &54851581269630810
+--- !u!54 &54913204677923126
 Rigidbody:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -101,7 +100,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &114009218714249410
+--- !u!114 &114866171806272200
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -109,18 +108,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1679139960392044}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d8e3f6fa6c38ee49a0b8073b7d59a5c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114998161773055766
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1679139960392044}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8026c4cc246f42242b8e726f36185bb6, type: 3}
+  m_Script: {fileID: 11500000, guid: 223f277d12682b249915b6c110f5dc29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!135 &135154959387657940

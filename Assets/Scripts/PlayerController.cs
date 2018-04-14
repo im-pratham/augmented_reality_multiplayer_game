@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.Networking;
 
-public class PlayerController : NetworkBehaviour, IDragHandler, IPointerUpHandler, IPointerDownHandler {
+public class PlayerController : NetworkBehaviour {//, IDragHandler, IPointerUpHandler, IPointerDownHandler {
 	public GameObject bulletPrefab;
 	public Transform bulletSpawn;
 	//public Button btnForward;
@@ -12,6 +12,7 @@ public class PlayerController : NetworkBehaviour, IDragHandler, IPointerUpHandle
 	public Image joystickImg;
 
 	private PlayerController playerController;
+
 
 	[SerializeField]
 	private Vector3 inputVector;
@@ -22,7 +23,7 @@ public class PlayerController : NetworkBehaviour, IDragHandler, IPointerUpHandle
 	void Start () {
 		if (!isLocalPlayer)
 			return;
-		playerController = GameObject.Find ("Player").GetComponent<PlayerController> ();
+		//playerController = GameObject.Find ("Player").GetComponent<PlayerController> ();
 
 		Debug.Log ("setting Player: ");
 		GameObject.Find ("ButtonDisconnect").GetComponent<Button> ().onClick.AddListener(CmdFire);
@@ -100,12 +101,12 @@ public class PlayerController : NetworkBehaviour, IDragHandler, IPointerUpHandle
 
 		if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved)
 		{
-			float speed = 0.1F;
+			float speed = 0.01F;
 			// Get movement of the finger since last frame
 			Vector2 touchDeltaPosition = Input.GetTouch(0).deltaPosition;
 
 			// Move object across XY plane
-			transform.Translate(-touchDeltaPosition.x * speed, 0, 0);
+			transform.Translate(-touchDeltaPosition.x * speed, -touchDeltaPosition.y * speed, 0);
 			//transform.Translate(-touchDeltaPosition.x * speed, -touchDeltaPosition.y * speed, 0);
 			Debug.Log ("touch: " + touchDeltaPosition);
 			if (debugText != null) {

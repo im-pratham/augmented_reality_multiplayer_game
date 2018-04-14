@@ -23,6 +23,7 @@ public class Health : NetworkBehaviour {
 		if (!isServer) {
 			return;
 		}
+		Debug.Log ("taking damage");
 		currentHealth -= amount;
 		if (currentHealth <= 0) {
 			if (destroyOnDeath) {
