@@ -10,7 +10,7 @@ public class PauseManager : MonoBehaviour {
 
 	public GameObject pausePanel;
 	public bool isPaused;
-	public Text score;
+	public Text score,scoreStatus;
 	StorageService storageService;
 	public Text textPaused;
 	Constant cons = new Constant ();
@@ -73,10 +73,11 @@ public class PauseManager : MonoBehaviour {
 		storageService.InsertJSONDocument("SCORES", "HighScores", json1, callBack2);
 		Debug.Log ("IN Enumerator " + callBack2.getResult ());
 		while (callBack2.getResult () == 0) {
-			yield return new WaitForSeconds (1);
+			yield return new WaitForSeconds (0.5f);
 		}
-		if (callBack2.getResult () == 1) {
-			Debug.Log ("Score Saved Successful");
+		Debug.Log ("IN Enumerator " + callBack2.getResult ());
+		if (callBack2.getResult() == 1) {
+			scoreStatus.text = "Your Score Submitted Successfully..";
 			callBack2.setResult ();
 		}
 		else if (callBack2.getResult () == 2) {
