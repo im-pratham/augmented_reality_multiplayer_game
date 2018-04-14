@@ -30,4 +30,18 @@ public class SinglePlayerCollisionScript : MonoBehaviour {
 		scoreMan.SetCount ();
 		Destroy (gameObject);
 	}
+	void SetScoreGame(){
+		GameObject explosion = Instantiate (Resources.Load ("FlareMobile", typeof(GameObject))) as GameObject;
+		explosion.transform.position = transform.position;
+		Destroy (explosion, 2);
+
+		if(GameObject.FindGameObjectsWithTag("Player").Length == 0) {
+			GameObject enemy = Instantiate (Resources.Load ("enemy", typeof(GameObject))) as GameObject;
+			GameObject enemy1 = Instantiate (Resources.Load ("enemy1", typeof(GameObject))) as GameObject;
+			GameObject enemy2 = Instantiate (Resources.Load ("enemy2", typeof(GameObject))) as GameObject;
+			GameObject enemy3 = Instantiate (Resources.Load ("enemy3", typeof(GameObject))) as GameObject;
+		}
+		scoreMan.SetCount ();
+		Destroy (gameObject);
+	}
 }
